@@ -16,10 +16,10 @@ export default function App() {
        initialRouteName='Home'
        screenOptions={{headerShown:false,
         tabBarShowLabel:false,
-        tabBarActiveTintColor:"red",
-        tabBarInactiveTintColor:'blue',
+        tabBarActiveTintColor:"#424242",
+        tabBarInactiveTintColor:'#000000',
         tabBarStyle:{
-          backgroundColor:"black"
+          backgroundColor:"#0054DE"
 
         }
 
