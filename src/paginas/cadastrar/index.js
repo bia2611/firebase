@@ -1,41 +1,57 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {View,Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native'
-
+import firebase from '../../firebaseConnection/index';
 
 export default function Cadastrar(){
 
-return(
-    <View style={styles.container}>  
-        <View style={styles.containerInputs}>
-            <Text style={styles.titulo}> Cadastro de Alunos</Text>
+    const [nome, setNome] = useState("");
+    const [nota1, setNota1] = useState("");
+    const [nota2, setNota2] = useState("");
+    const [nota3, setNota3] = useState("");
+    const [imagem, setImagem] = useState("");
 
-            <Text style={styles.label}>Nome:</Text>
-            <TextInput style={styles.input} placeholder="Digite o nome"/>
+    async function cadastrar(){
+       const alunos = await firebase.database().ref('Alunos');
+       const chave = alunos.push().key;
 
-            <Text style={styles.label}>Idade:</Text>
-            <TextInput style={styles.input} placeholder="Digite sua idade"/>
+       alunos.child(chave).set({
+            Nome: nome,
+            Nota1: nota1,
+            Nota2: nota2,
+            Nota3: nota3,
+            Imagem: imagem,
+       })
 
-            <Text style={styles.label}>Nota 1:</Text>
-            <TextInput style={styles.input} placeholder="Digite a primeira nota"/>
+    }
+    
+    return(
+        <View style={styles.container}>  
+            <View style={styles.containerInputs}>
+                <Text style={styles.titulo}> Cadastro de Alunos</Text>
 
-            <Text style={styles.label}>Nota 2:</Text>
-            <TextInput style={styles.input} placeholder="Digite a segunda nota"/>
+                <Text style={styles.label}>Nome:</Text>
+                <TextInput style={styles.input} placeholder="Digite o nome" onChangeText={(texto)=> setNome(texto)}/>
 
-            <Text style={styles.label}>Nota 3:</Text>
-            <TextInput style={styles.input} placeholder="Digite a terceira nota"/>
+                <Text style={styles.label}>Nota 1:</Text>
+                <TextInput style={styles.input} placeholder="Digite a primeira nota" onChangeText={(texto)=> setNota1(texto)}/>
 
-            <Text style={styles.label}>Imagem:</Text>
-            <TextInput style={styles.input} placeholder="Cole o link com a foto do aluno"/>
+                <Text style={styles.label}>Nota 2:</Text>
+                <TextInput style={styles.input} placeholder="Digite a segunda nota" onChangeText={(texto)=> setNota2(texto)}/>
 
-            <TouchableOpacity style={styles.botao}>
-                <Text style={styles.textoBotao}>Cadastrar</Text>
-            </TouchableOpacity>
+                <Text style={styles.label}>Nota 3:</Text>
+                <TextInput style={styles.input} placeholder="Digite a terceira nota" onChangeText={(texto)=> setNota3(texto)}/>
+
+                <Text style={styles.label}>Imagem:</Text>
+                <TextInput style={styles.input} placeholder="Cole o link com a foto do aluno" onChangeText={(texto)=> setImagem(texto)}/>
+
+                <TouchableOpacity style={styles.botao} onPress={cadastrar}>
+                    <Text style={styles.textoBotao}>Cadastrar</Text>
+                </TouchableOpacity>
+            </View>
         </View>
-        
-    </View>
 
 
-    );
+        );
 }
 
 
