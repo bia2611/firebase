@@ -39,7 +39,7 @@ useEffect(()=> {
                 data={alunos}
                 numColumns={2}
                 keyExtractor={(item)=> item.key}
-                renderItem={({item}) => <CardAluno />}
+                renderItem={({item}) => <CardAluno data={item}/>}
             />
         </View>
     );

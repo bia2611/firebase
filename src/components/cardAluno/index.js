@@ -1,30 +1,45 @@
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-export default function CardAluno(){
+export default function CardAluno({data}){
+    const navigation = useNavigation();
+
+    function IrDetalhes(){
+        navigation.navigate('Detalhes',{dados: data})
+    }
+    
     return (
 
-        <View style ={style.container}>
-            <Image style={style.imagem} source = {{uri: "https://nova-escola-producao.s3.amazonaws.com/tunxSkGu84NNEkscfMQUVeRzZD62xuejkA7ZhCD79kyDMjHzpWW2b7MgT62N/menina-faz-exercicio-no-caderno-na-escola.jpg"}}></Image>
-            <Text>Maria</Text>
-        </View>
-);
-
+        <TouchableOpacity onPress={IrDetalhes} style ={style.container}>
+            <Image style={style.imagem} source = {{uri: data.imagem}}></Image>
+            <Text style={style.nome}>{data.nome}</Text>
+        </TouchableOpacity>
+    );
 }
 
 const style = StyleSheet.create ({
     container :{
         marginHorizontal: 5,
         marginTop: 5,
-        backgroundColor: 'yellow',
+        marginVertical: 5,
+        backgroundColor: 'transparent',
         width: 200,
-        height: 200
+        height: 200,
+        justifyContent: 'center',
+        alignItems: 'center',  
+        borderColor: 'black',
+        borderWidth: 1,
     },
 
     imagem :{
         width: '100%',
-        height: '100%'
+        height: '85%',   
+    },
 
+    nome: {
+        fontSize: 20,
+        textAlign: 'center',
     }
 
 })
